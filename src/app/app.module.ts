@@ -11,12 +11,14 @@ import 'rxjs/add/operator/toPromise';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { EscolhaPage } from '../pages/escolha/escolha';
+import { CadastroPage } from '../pages/cadastro/cadastro';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     EscolhaPage,
+    CadastroPage,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +30,7 @@ import { EscolhaPage } from '../pages/escolha/escolha';
     MyApp,
     HomePage,
     EscolhaPage,
+    CadastroPage,
   ],
   providers: [
     StatusBar,
