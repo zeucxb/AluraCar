@@ -29,7 +29,7 @@
 
     <ion-item>
       <ion-label stacked>Data do Agendamento</ion-label>
-      <ion-datetime name="agendamento.data" displayFormat="DD/MM/YY" [(ngModel)]="data"></ion-datetime>
+      <ion-datetime [(ngModel)]="agendamento.data" name="data" displayFormat="DD/MM/YY"></ion-datetime>
     </ion-item>
     <button ion-button block type="submit">Finalizar Agendamento</button>
   </form>

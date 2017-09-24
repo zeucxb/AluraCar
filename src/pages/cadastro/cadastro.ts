@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, Alert } from 'ionic-angular';
-import { Http } from '@angular/http';
 
 import { Carro } from '../../domain/carro/carro';
 import { Agendamento } from '../../domain/agendamento/agendamento';
+import { AgendamentoService } from '../../domain/agendamento/agendamento-service';
+// import { AgendamentoDao } from '../../domain/agendamento/agendamento-dao';
 
 import { HomePage } from '../home/home';
 
@@ -22,8 +23,9 @@ export class CadastroPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private _http: Http,
+    private _service: AgendamentoService,
     private _alertCtrl: AlertController,
+    // private _dao: AgendamentoDao,
   ) {
     this.carro = navParams.get('carro');
     this.precoTotal = navParams.get('precoTotal');
@@ -53,18 +55,19 @@ export class CadastroPage {
       return;
     }
 
-    this._http
-      .get(`https://aluracar.herokuapp.com/salvarpedido?carro=${this.carro.nome}&nome=${this.agendamento.nome}&preco=${this.precoTotal}&endereco=${this.agendamento.endereco}&email=${this.agendamento.email}&dataAgendamento=${this.agendamento.data}`)
-      .toPromise()
-      .then(() => {
-        this._alerta.setSubTitle('Agendamento realizado com sucesso.');
+    this._service
+      .agenda(this.agendamento)
+      .then(confirmado => {
+        confirmado ?
+          this._alerta.setSubTitle('Agendamento realizado com sucesso.') :
+          this._alerta.setSubTitle('Não foi possível realizar o agendamento!');
+
         this._alerta.present();
       })
-      .catch(erro => {
-        console.log(erro);
-        this._alerta.setSubTitle('Não foi possível realizar o agendamento!');
+      .catch((err) => {
+        this._alerta.setSubTitle(err.message);
         this._alerta.present();
-      });
+      })
   }
 
 }
